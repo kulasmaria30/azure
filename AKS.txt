@@ -1,0 +1,64 @@
+DOCKER:
+index.html
+Dockerfile
+
+docker login
+docker build -t aksapp .
+docker run -dit -p hostPort:containerPort --name containerName imageName
+docker tag SOURCE_IMAGE[:TAG] TARGET_IMAGE[:TAG]
+docker push yourusername/simple-nginx:latest
+
+CREATE AKS CLUSTER:
+resourcegroup="aks-rg"
+clustername="aks-cluster"
+location="eastus"
+
+az group create --name $resourcegroup --location $location
+az aks create --resource-group $resourcegroup --name $clustername --node-count 1 --generate-ssh-keys
+
+az aks get-credentials --resource-group $resourcegroup --name $clustername --overwrite-existing
+
+DELETE THE RESOURCEGROUP:
+resourcegroup="aks-rg"
+clustername="aks-cluster"
+location="eastus"
+
+az group delete --name $resourcegroup --yes --no-wait
+
+
+
+REPLICASETS:
+To update image on replicaset using kubectl
+kubectl set image replicaset/replicasetname containername=image:tag
+
+To scale the pods in replicaset using kubectl
+kubectl scale replicaset/replicasetname --replicas=n (n= number of replicas)
+
+To delete the replicaset using kubectl
+kubectl delete rs/replicasetname
+
+DEPLOYMENTS:
+To set image on Deployment using kubectl
+kubectl set image Deployment/Deploymentname containername=image:tag
+
+To scale the pods in Deployment using kubectl
+kubectl scale Deployment/Deploymentname --replicas=n (n= number of replicas)
+
+Revision history of Deployment using kubectl
+kubectl rollout status Deployment/Deploymentname
+kubectl rollout history Deployment/Deploymentname
+kubectl rollout undo Deployment/Deploymentname --to-revision=n
+
+To delete the Deployment using kubectl
+kubectl delete Deployment/Deploymentname
+
+
+Delete all resources in aks cluster:
+Kubectl delete all --all
+
+
+while true;
+do
+curl -sL http://172.210.105.102/
+sleep 2
+done
